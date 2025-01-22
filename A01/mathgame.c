@@ -18,7 +18,7 @@ int main() {
             numOne = (rand() % 9) + 1;
             numTwo = (rand() % 9) + 1;
             correctAnswer = numOne + numTwo;
-            printf("%d + %d = ? ", numOne, numTwo);
+            printf("\n%d + %d = ? ", numOne, numTwo);
             scanf("%d", &userAnswer);
             if (userAnswer == correctAnswer) {
                 printf("Correct!\n");
