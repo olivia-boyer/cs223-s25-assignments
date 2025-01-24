@@ -24,12 +24,15 @@ int main() {
             numTwo = (rand() % 9) + 1;
 
             correctAnswer = numOne + numTwo;
+
             printf("\n%d + %d = ? ", numOne, numTwo);
+
             scanf("%d", &userAnswer);
 
             if (userAnswer == correctAnswer) {
 
                 printf("Correct!\n");
+
                 correctNum += 1;
 
             } else {
