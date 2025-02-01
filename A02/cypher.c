@@ -6,9 +6,12 @@
 #include <stdio.h>
 #include <string.h>
 
+/*implements the shift cypher, editing the char array*/
 void cypherfy(char input[], int shift) {
+
     int length = strlen(input);
     for (int i = 0; i < length; i++) {
+
         input[i] = (((input[i] % 97) + shift + 26) % 26) + 97;
       
     }

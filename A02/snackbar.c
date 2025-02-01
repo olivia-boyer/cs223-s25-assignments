@@ -1,20 +1,25 @@
 /***************************************************
- * Author: 
- * 
+ * Author: Olivia Boyer 
+ * creates user interactable snackbar that items can be purchased from.
  */
 #include <stdio.h>
 #include <string.h>
 
+/*stores info for each snack*/
 typedef struct snack {
+
     char name[64];
     float cost;
     int quantity;
+
 } snack;
 
 snack stock[3];
 int stockSize = sizeof(stock) / sizeof(stock[0]);
 
+/*creates the array of snacks to sell*/
 void setup(snack stock[]) {
+
     strcpy(stock[0].name, "baguette");
     stock[0].cost = 4.50f;
     stock[0].quantity = 5;
@@ -28,8 +33,11 @@ void setup(snack stock[]) {
     stock[2].quantity = 0;
 }
 
+/*prints the array of snacks to the console*/
 void printSnacks(snack stock[]) {
+
     printf("%d", stockSize);
+
     for (int i = 0; i < stockSize ; i++) {
         printf("\n%d) ", i);
         printf("%-12s\t", stock[i].name);
@@ -38,30 +46,42 @@ void printSnacks(snack stock[]) {
     }
 }
 
+/*prints statements based on ability of user to buy snack*/
 float sell(snack choice, float bank) {
+
     if (choice.quantity == 0) {
+
         printf("\nSorry, we are out of %s\n", choice.name);
+
     } else if (choice.cost > bank) {
+
         printf("\nYou can't afford it!\n");
+
      }  else {
+
           printf("\nYou bought %s", choice.name);
           bank = bank - choice.cost;
           printf("\nYou have %-.2f left\n", bank);
+
              }
     return bank;
 }
 
 int main() {
+
     setup(stock);
+
     float wallet;
     int snackNum;
+
     printf("Welcome to Steven Struct's Snack Bar.\n");
     printf("\nHow much money do you have?  $");
     scanf("%f", &wallet);
     
     printSnacks(stock);
     printf("\nWhat snack would you like to buy? [0,1,2] ");
+
     scanf("%d", &snackNum);
-    wallet =  sell(stock[snackNum], wallet); //check price and quantity, deliver appropriate message. 
- return 0;
+    wallet =  sell(stock[snackNum], wallet);  
+    return 0;
 }
