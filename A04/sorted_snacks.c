@@ -1,7 +1,9 @@
 /*----------------------------------------------
- * Author: 
- * Date: 
- * Description
+ * Author: Olivia Boyer 
+ * Date: 02/15/25
+ * Description: lets user input snacks, which are
+ * stored in a linked list. THe list is then sorted
+ * and printed to the terminal.
  ---------------------------------------------*/
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +31,7 @@ void insertFront (snack data, snackNode** head) {
     *head = newNode;
 }
 
-void clear (snackNode* head) {         //Borken :(
+void clear (snackNode* head) {         
     if (head == NULL) {
         return;
     }
@@ -166,7 +168,9 @@ snackNode* mergeName(snackNode* headOne, snackNode* headTwo) {
     
 }
 
-
+//sorting done with mergesort. Couldn't remember algorithm from
+//data structures, so ended up referencing geeksforgeeks page
+//pretty heavily
 snackNode* sortName(snackNode* head) {
     if (head == NULL || head->next == NULL) {
     return head;
@@ -183,13 +187,17 @@ snackNode* sortName(snackNode* head) {
 
 void getSnacks(int num, snackNode** head) {
     snack newSnack;
+
     for (int i = 0; i < num; i++) {
         printf("\nEnter a name: ");
         scanf("%s", newSnack.name);
+
         printf("\nEnter a cost: ");
         scanf("%f", &newSnack.cost);
+
         printf("\nEnter a quantity: ");
         scanf("%d", &newSnack.quantity);
+
         insertFront(newSnack, head);
     }
 }
@@ -198,12 +206,14 @@ int main() {
     int numSnacks;
     printf("Enter a number of snacks: ");
     scanf("%d", &numSnacks);
+
     snackNode* head = NULL;
     getSnacks(numSnacks, &head);
-    printList(numSnacks, &head);
     head = sortName(head);
+
     printf("Welcome to Sorted Sally's Snackbar!\n");
     printList(numSnacks, &head);
+
     clear(head);
-  return 0;
+    return 0;
 }

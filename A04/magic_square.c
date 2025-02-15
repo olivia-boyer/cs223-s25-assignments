@@ -1,7 +1,9 @@
 /*----------------------------------------------
- * Author: 
- * Date: 
- * Description
+ * Author: Olivia Boyer 
+ * Date: 02/014/25
+ * Description: reads in a given array and determines
+ * whether it is a "magic square" i.e. the sums of
+ * each row == sum of each column == sum of diagonals.
  ---------------------------------------------*/
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,23 +63,32 @@ int main() {
     int rows, cols;
     scanf("%d", &rows);
     scanf("%d", &cols);
+
     if (rows != cols) {
         printf("M is NOT a magic square!\n");
         return 0;
-    } 
+    }
+ 
     int* array = malloc(sizeof(int) * rows * cols);
+
     for (int i = 0; i < (rows * cols); i++) {
+
         scanf("%d",&array[i]);
     }
+
     int magConst = 0; //magic constant
+
     for (int i = 0; i < cols; i++) {
+
         magConst += array[i];
     }
+
     if (!checkRows(array, magConst, rows, cols) || 
         !checkCols(array, magConst, rows, cols) ||
             !checkDiagonal(array, magConst, rows, cols)) {
         printf("M is NOT a magic square!\n");
     } else {
+
         printf("M is a magic square (magic constant = %d)\n", magConst);
     }
     free(array);
