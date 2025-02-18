@@ -54,7 +54,7 @@ int main()
     int len = strlen(word);
     Node* head = NULL;
 
-    char rem = 'a';
+    char rem;
     printf("Enter a character to remove: ");
     scanf(" %c", &rem);
 
