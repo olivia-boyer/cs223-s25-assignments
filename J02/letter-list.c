@@ -21,7 +21,7 @@ void insertFront (char input, Node** head) {
       *head = newNode;
 }
 
-void printList (int size, Node** head) {
+void printList (Node** head) {
     Node* ptr = *head;
     while (ptr != NULL) {
 
@@ -42,25 +42,34 @@ void clear (Node* head) {
 
 int main()
 {
-    char* word = malloc(sizeof(char) * 32);
+    char* word = (char*)malloc(sizeof(char) * 32);
+
+    if (word == NULL) {
+        printf("memory error");
+        exit(1);
+    }
+
     printf("Enter a word: ");
     scanf("%s", word);
     int len = strlen(word);
     Node* head = NULL;
 
+    char rem = 'a';
     printf("Enter a character to remove: ");
-    char remove;
-    scanf("%c", &remove);
+    scanf(" %c", &rem);
 
     for (int i = len - 1; i >= 0; i--) {
-        if (word[i] != remove) {
+        if (word[i] != rem) {
 
             insertFront(word[i], &head);
 
         }   
     }
+    printf("\n");
+    printList(&head);
+    printf("\n");
     free(word);
     clear(head);
 
-  return 0;
+    return 0;
 }
