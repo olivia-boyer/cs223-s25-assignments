@@ -1,7 +1,7 @@
 /*----------------------------------------------
- * Author: 
- * Date: 
- * Description
+ * Author: Olivia Boyer 
+ * Date: 02/21/25
+ * Description: reads in feep-raw.ppm and prints data to console.
  ---------------------------------------------*/
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,7 +1,7 @@
 /*----------------------------------------------
- * Author: 
- * Date: 
- * Description
+ * Author: Olivia Boyer 
+ * Date: 02/21/25
+ * Description: writes to a .ppm file with given pixel array. 
  ---------------------------------------------*/
 #include "write_ppm.h"
 #include <stdio.h>
