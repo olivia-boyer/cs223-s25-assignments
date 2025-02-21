@@ -17,12 +17,7 @@ void write_ppm(const char* filename, struct ppm_pixel* pixels, int w, int h) {
     fprintf(writeTo, "%d %d\n", w, h);
     fprintf(writeTo, "225\n");
     
-    for (int i = 0; i < h; i++) {
-        for (int j = 0; j < w; j++) {
-            fwrite(pixels, sizeof(struct ppm_pixel), 
-                arraSize, writeTo);    
-        }
-    } 
+    fwrite(pixels, sizeof(struct ppm_pixel), arraSize, writeTo);    
     fclose(writeTo);
 }
 
