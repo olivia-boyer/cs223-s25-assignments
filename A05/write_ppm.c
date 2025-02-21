@@ -10,7 +10,20 @@
 // implement *one* (but do not remove the other one)!
 
 void write_ppm(const char* filename, struct ppm_pixel* pixels, int w, int h) {
-
+    int arraSize = w * h;
+    FILE* writeTo = fopen(filename, "wb");
+    fprintf(writeTo, "P6\n");
+    fprintf(writeTo, "#comment\n");
+    fprintf(writeTo, "%d %d\n", w, h);
+    fprintf(writeTo, "225\n");
+    
+    for (int i = 0; i < h; i++) {
+        for (int j = 0; j < w; j++) {
+            fwrite(pixels, sizeof(struct ppm_pixel), 
+                arraSize, writeTo);    
+        }
+    } 
+    fclose(writeTo);
 }
 
 void write_ppm_2d(const char* filename, struct ppm_pixel** pixels, int w, int h) {
