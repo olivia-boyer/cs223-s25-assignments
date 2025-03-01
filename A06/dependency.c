@@ -51,9 +51,10 @@ void listDependencies(char* fileName) {
 
         }
 
-        curLine = strtok(curLine, "<>; \"");
-        ptr = &curLine[9];
-        printf("%s", ptr);
+        ptr = strtok(curLine, "<>\"");
+        ptr = strtok(NULL, "<>\"");
+        
+        printf("%s\n", ptr);
     }
 
     fclose(file);
