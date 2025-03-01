@@ -1,3 +1,9 @@
+/*--------------------------------------
+ * Author: Olivia Boyer
+ * Date: 02/28/2025
+ * Description: implements a binary 
+ * search tree.
+---------------------------------------*/
 #include "tree.h"
 #include "stdio.h"
 #include "stdlib.h"
@@ -6,37 +12,57 @@
 struct tree_node* find(const char* name, struct tree_node* root)
 {
     if (root == NULL) {
+
         return NULL;
+
     }
     if (strcmp(name, (root->data).name) == 0) {
+
         return root;
+
     } 
     if (strcmp(name, (root->data).name) < 0) {
+
         return find(name, root->left);
+
     }
     if (strcmp(name, (root->data).name) > 0) {
+
         return find(name, root->right);
+
     }
 
     return NULL;
 }
 
+//helper function for insert
 void insertRecursion(const char* name, struct tree_node* newNode,
     struct tree_node* head) 
 {
     if (strcmp(name, (head->data).name) < 0) {
+
         if (head->left == NULL) {
+
             head->left = newNode;
+
             return;
+
         } else {
+
             return insertRecursion(name, newNode, head->left);
+
         }
     } else {
+
         if (head->right == NULL) {
+
             head->right = newNode;
             return;
+
         } else {
+
             return insertRecursion(name, newNode, head->right);
+
         }
     }
 }
@@ -47,13 +73,16 @@ struct tree_node* insert(const char* name, struct tree_node* root)
 {
     struct tree_node* newNode = (struct tree_node*)malloc(
         sizeof(struct tree_node));
+
     strcpy((newNode->data).name, name);
     newNode->left = NULL;
     newNode->right = NULL;
 
     if (root == NULL) {
+
         root = newNode;
         return root;
+
     }
 
     insertRecursion(name, newNode, root); 
@@ -74,6 +103,7 @@ void clear(struct tree_node* root)
     free(root);
 }
 
+//helper function for print
 void printHelper (struct tree_node* root, int spaces, const char* prefix) 
 {
     if (root == NULL) {
