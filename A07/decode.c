@@ -22,41 +22,46 @@ void decode(const char* fileName) {
 
   printf("Max number of characters in the image: %d\n", size);
 
-  char* code = (char*)malloc(sizeof(char) * (size));
+  unsigned char* code = (unsigned char*)malloc(sizeof(unsigned char) * (size));
 
   if (code == NULL) {
     printf("Error creating array");
     return;
   }
-  code[0] = 0;
-  char* lastChar = &code[0];
+
+  code[0] = '1'; //intializing value to something != '\0'
+
+  unsigned char* lastChar = &code[0];
   int p = 0; //for indexing pixels array
   int c = 0; //for indexing code array
+
   while (*lastChar != '\0') {
 
-    code[c] = 0;
+    code[c] = '1';
 
     for (int j = 0; j < 8; j++) {
+      
       code[c] = code[c] << 1;
 
       if ((pixels[p] & LASTBIT) == LASTBIT) {
-
         code[c] = code[c] | LASTBIT;
 
-      }
+       }
 
-      lastChar = &code[c];
       p++; 
 
     }
 
+    lastChar = &code[c];
     c++;
 
   }
-    printf("%s", code);
+
+    printf("%s\n", code);
     
     free(code);
     free(pixels);
+    return;
 }
 
 
