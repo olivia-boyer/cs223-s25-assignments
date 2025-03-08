@@ -34,10 +34,9 @@ void encode(const char* fileName){
     printf("Error reading input");
   }
 
-  char* lastChar = &secretPhrase[0];
   int p = 0; //for indexing pixels array
   int s = 0; //for indexing secretPhrase array
-  while (*lastChar != '\0') {
+  while (secretPhrase[s] != '\0') {
     for (int i = 0; i < 8; i++) {
       if ((secretPhrase[s] & FIRST) == FIRST) {
         pixels[p] = pixels[p] | LAST;
@@ -47,7 +46,6 @@ void encode(const char* fileName){
       secretPhrase[s] = secretPhrase[s] << 1;
       p++;
     }
-    lastChar = &secretPhrase[s];
     s++;
   }
   char* newName = malloc((sizeof(char)) * (strlen(fileName) + 8));

@@ -57,7 +57,7 @@ void decode(const char* fileName) {
 
   }
 
-    printf("%s\n", code);
+    printf("%s", code);
     
     free(code);
     free(pixels);
