@@ -13,15 +13,14 @@
 void decode(const char* fileName) {
   int w, h;
   unsigned char* pixels = (unsigned char*)(read_ppm(fileName, &w, &h));
-  int size = (w * h)/8;
-
+  int size = 3 * (w * h)/8;
   if (pixels == NULL) {
     return;
   }
- 
+    
   printf("Reading %s with width %d and height %d\n", fileName, w, h );
 
-  printf("Max number of characters in the image: %d", size);
+  printf("Max number of characters in the image: %d\n", size);
 
   char* code = (char*)malloc(sizeof(char) * (size));
 
@@ -29,25 +28,36 @@ void decode(const char* fileName) {
     printf("Error creating array");
     return;
   }
-
-  char* lastChar = NULL;
+  code[0] = 0;
+  char* lastChar = &code[0];
   int p = 0; //for indexing pixels array
   int c = 0; //for indexing code array
   while (*lastChar != '\0') {
+
+    code[c] = 0;
+
     for (int j = 0; j < 8; j++) {
-      if ((pixels[p] & LASTBIT) == LASTBIT) {
-        code[c] = code[c] | LASTBIT;
-      }
       code[c] = code[c] << 1;
+
+      if ((pixels[p] & LASTBIT) == LASTBIT) {
+
+        code[c] = code[c] | LASTBIT;
+
+      }
+
+      lastChar = &code[c];
       p++; 
+
     }
+
     c++;
-    }
+
+  }
     printf("%s", code);
     
     free(code);
     free(pixels);
-  }
+}
 
 
 
