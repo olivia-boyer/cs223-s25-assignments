@@ -9,6 +9,10 @@
 #define BLUE "\x1b[34m"
 #define NORMAL "\x1b[0m"
 
+/*Name: Olivia Boyer
+ *Description: searches inputted files for keyword using n processes.
+*/
+
 int  scanFiles (char** files, int numFiles, int startID) {
     char* line = malloc(sizeof(char) * 81);
     int occurences = 0;
@@ -17,22 +21,31 @@ int  scanFiles (char** files, int numFiles, int startID) {
         getpid(), numFiles, startID, startID + numFiles);
 
     for (int i = startID; i < startID + numFiles; i++) {
-        FILE* file = fopen(files[i], "r");
+  
+      FILE* file = fopen(files[i], "r");
+
         if (file == NULL) {
             perror("Error");
+            fclose(file);
             continue;
         }
+
         while (fgets(line, 81, file)) {
+
             char* p = strstr(line, files[2]);
+
             if (p) {
                 printf("%s%d) %s%s:%s %s", MAGENTA, getpid(), files[i], BLUE, NORMAL, p);
                 occurences += 1;
             }
+
         }
         fclose(file);
+
     }
     printf("Process [%d] found %d lines containing keyword: %s\n", 
         getpid(), occurences, files[2]); 
+
     free(line);
     return occurences;       
 }
@@ -62,6 +75,7 @@ int main(int argc, char** argv) {
 
         if (!isParent) {
             int exitCode = scanFiles(argv, readNum, startId);
+            free(children);
             exit(exitCode);
         }
 
@@ -78,13 +92,14 @@ int main(int argc, char** argv) {
             for (int i = 0; i < numProc - 1; i++) {
                 waitpid(children[i], &temp, 0);
                 res += WEXITSTATUS(temp);
-                // printf("%d %d\n", children[i], WEXITSTATUS(temp));
             }
         }
 
     gettimeofday(&end, 0);
+
     printf("Total occurances: %d\n", res);
     printf("Elapsed time is %f\n",(float) (end.tv_usec - start.tv_usec) / 1000000); 
+
     free(children);
     return 0;
 }
