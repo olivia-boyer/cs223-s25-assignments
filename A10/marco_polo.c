@@ -4,6 +4,14 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
+
+/* Name: Olivia Boyer.
+ * Desc: Creates a parent and child process that call to each other using
+ * SIGALRM and custom handlers. This is shown via printing "marco polo" to
+ * the terminal.
+ */
+
+
 int parentId;
 int childId;
 
