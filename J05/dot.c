@@ -13,8 +13,8 @@ struct thread{
   pthread_t id;
   int index;
   int sum;
-  int v[SIZE];
-  int u[SIZE];
+  int* v;
+  int* u;
 };
 
 void *dot( void* i){
@@ -58,8 +58,8 @@ int main(int argc, char *argv[]) {
   
   for( int i = 0; i < 4; i++){
     threads[i].index = i;
-    memcpy(threads[i].v, v, sizeof(v));
-    memcpy(threads[i].u, u, sizeof(u));
+    threads[i].v = v;
+    threads[i].u = u;
     pthread_create(&threads[i].id, NULL, dot, &threads[i]);
   }
 
