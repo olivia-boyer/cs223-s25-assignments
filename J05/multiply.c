@@ -13,8 +13,8 @@ struct thread{
   pthread_t id;
   int index;
   int vector[SIZE];
-  int M[SIZE * SIZE];
-  int u[SIZE];
+  int* M;
+  int* u;
 };
 
 void *threadMultiply( void* i){
@@ -67,8 +67,8 @@ int main(int argc, char *argv[]) {
   
   for( int i = 0; i < 4; i++){
     threads[i].index = i;
-    memcpy(threads[i].M, M, sizeof(M));
-    memcpy(threads[i].u, u, sizeof(u));
+    threads[i].M = M;
+    threads[i].u = u;
     pthread_create(&threads[i].id, NULL, threadMultiply, &threads[i]);
   }
 
