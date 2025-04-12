@@ -24,7 +24,7 @@ int findAverage(struct ppm_pixel* brightMap, int r, int c, int w, int h) {
   if ((h - r) <= 12) {
     highH = h;
   } else { 
-    highH = h + 12;
+    highH = r + 12;
   }
 
   if ((c) <= 12) {
@@ -45,12 +45,14 @@ int findAverage(struct ppm_pixel* brightMap, int r, int c, int w, int h) {
       div += 1;
     }
   }
+    
   //printf("%d %d\n", r, c);
 return sum/div;
 }
 
 int main(int argc, char* argv[]) {
   int w, h;
+ 
   const char* fileName = "earth-small.ppm";
   struct ppm_pixel* pixels = read_ppm(fileName, &w, &h);
 

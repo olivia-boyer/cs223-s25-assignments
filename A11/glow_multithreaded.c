@@ -38,7 +38,7 @@ int findAverage(struct ppm_pixel* brightMap, int r, int c, int w, int h) {
     if ((h - r) <= 12) {
       highH = h;
     } else { 
-      highH = h + 12;
+      highH = r + 12;
     }
   
     if ((c) <= 12) {
