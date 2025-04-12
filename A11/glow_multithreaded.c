@@ -17,40 +17,44 @@ struct threadArgs{
   int h;
   int id;
   pthread_barrier_t* barrier;
+  int blurSize;
+  int threshold;
 };
 
 
 
-int findAverage(struct ppm_pixel* brightMap, int r, int c, int w, int h) {
+int findAverage(struct ppm_pixel* brightMap, int r, int c, 
+  int w, int h, int b) {
 
   //  printf("%d \n", r);
   
     int highW, lowW, highH, lowH;
     int div = 0;
     int sum = 0;
+    int dist = (b - 1)/2;
   
-    if ((w - c) <= 12) {
+    if ((w - c) <= dist) {
       highW = w;
     } else { 
-      highW = c + 12;
+      highW = c + dist;
     }
   
-    if ((h - r) <= 12) {
+    if ((h - r) <= dist) {
       highH = h;
     } else { 
-      highH = r + 12;
+      highH = r + dist;
     }
   
-    if ((c) <= 12) {
+    if ((c) <= dist) {
       lowW = 0;
     } else { 
-      lowW = c - 12;
+      lowW = c - dist;
     }
   
-    if ((r) <= 12) {
+    if ((r) <= dist) {
       lowH = 0;
     } else { 
-      lowH = r - 12;
+      lowH = r - dist;
     }
   
     for (int i = lowH; i < highH; i++) {
@@ -78,7 +82,7 @@ void* glowEffect(void* arguments){
       brightness = (args->pixels[(w * i) + j].red + 
         args->pixels[(w * i) + j].blue + args->pixels[(w * i) + j].green)/3;
 
-      if (brightness > 200) {
+      if (brightness > args->threshold) {
           args->newPixels[(w * i) + j].red = brightness;
           args->newPixels[(w * i) + j].blue = brightness; 
           args->newPixels[(w * i) + j].green = brightness;
@@ -96,7 +100,7 @@ void* glowEffect(void* arguments){
 
   for (int i = start; i < h; i++) {
     for (int j = 0; j < w; j++) {
-      blurVal = findAverage(args->newPixels, i, j, w, h);
+      blurVal = findAverage(args->newPixels, i, j, w, h, args->blurSize);
       args->brightMap[(w*i) + j].blue = blurVal;
       args->brightMap[(w*i) + j].red =  blurVal;
       args->brightMap[(w*i) + j].green =  blurVal;
@@ -190,6 +194,8 @@ int main(int argc, char* argv[])
     threads[i].newPixels = newPixels;
     threads[i].brightMap = blurred;
     threads[i].barrier = &barrier;
+    threads[i].blurSize = blursize;
+    threads[i].threshold = threshold;
     pthread_create(&tids[i], NULL, glowEffect, (void*) &threads[i]);
   }
 
