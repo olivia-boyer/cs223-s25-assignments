@@ -65,12 +65,14 @@ int findAverage(struct ppm_pixel* brightMap, int r, int c, int w, int h) {
 
 
 void* glowEffect(void* arguments){
-  struct threadArgs* args= (struct threadArgs*) arguments;
+  struct threadArgs* args = (struct threadArgs*) arguments;
   int w = args->w;
   int h = args->h;
+  int start = h * args->id;
+  h = h + start;
   int brightness = 0;
 
-  for (int i = 0; i < args->h; i++) {
+  for (int i = start; i < h; i++) {
     for (int j = 0; j < args->w; j++) {
 
       brightness = (args->pixels[(w * i) + j].red + 
@@ -92,7 +94,7 @@ void* glowEffect(void* arguments){
 
   int blurVal = 0;
 
-  for (int i = 0; i < h; i++) {
+  for (int i = start; i < h; i++) {
     for (int j = 0; j < w; j++) {
       blurVal = findAverage(args->newPixels, i, j, w, h);
       args->brightMap[(w*i) + j].blue = blurVal;
@@ -105,7 +107,7 @@ void* glowEffect(void* arguments){
   int index = 0;
   int sum = 0; 
 
-  for (int i = 0; i < h; i++) {
+  for (int i = start; i < h; i++) {
     for (int j = 0; j < w; j++) {
       index = (w * i) + j;
       sum = args->pixels[index].red + args->brightMap[index].red;
@@ -191,10 +193,12 @@ int main(int argc, char* argv[])
     pthread_create(&tids[i], NULL, glowEffect, (void*) &threads[i]);
   }
 
+
   for (int i = 0; i < N; i++) {
     pthread_join(tids[i], NULL);
   }
 
+  write_ppm("check.ppm", newPixels, w, h);
   write_ppm("multiglow.ppm", pixels, w, h);
 
   free(threads);
