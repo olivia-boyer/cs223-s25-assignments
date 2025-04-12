@@ -92,6 +92,7 @@ void *glowEffect(void *arguments)
   int h = args->h;
   int start = h * args->id;
   h = h + start;
+  printf("Thread sub-image slice: rows (%d, %d)\n",start, h);
   int brightness = 0;
 
   for (int i = start; i < h; i++)
