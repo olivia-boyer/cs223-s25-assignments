@@ -1,3 +1,8 @@
+/*Name: Olivia Boyer
+ *Desc: a basic producer consumer implementation using a circular queue
+ *and threads.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,6 +11,7 @@
 #include <unistd.h>
 
 #define N 10
+
 pthread_cond_t full = PTHREAD_COND_INITIALIZER;
 pthread_cond_t empty = PTHREAD_COND_INITIALIZER;
 pthread_mutex_t mux = PTHREAD_MUTEX_INITIALIZER;
@@ -59,14 +65,6 @@ void* producer(void*) {
 
 
 int main() {
-//create circular queue
-//create producer thread
-//create consumer thread
-//sync actions
-//infinite loop  
-
-// todo
-
 pthread_t threads[2];
 pthread_create(&threads[0], NULL, producer, NULL);
 pthread_create(&threads[1], NULL, consumer, NULL);

@@ -1,3 +1,8 @@
+/*Name: Olivia Boyer
+*Desc: Uses threads to simulate cars driving accross a one way bridge
+*That cannot support two lanes of traffic without spontaneously exploding.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

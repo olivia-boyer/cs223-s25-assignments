@@ -1,9 +1,13 @@
+/*Name: Olivia Boyer
+ *Desc: Simulates two bank accounts transferring money back and forth
+ *while preventing either from going into the negatives using threads.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
 #include <assert.h>
-
 
 struct account {
   float balance;
