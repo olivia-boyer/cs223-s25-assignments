@@ -4,9 +4,11 @@
 #include <pthread.h>
 #include <assert.h>
 
+
 struct account {
   float balance;
   pthread_mutex_t lock;
+  pthread_cond_t loBalance;
 };
 
 struct thread_data {
@@ -23,14 +25,16 @@ void *Transfer(void *args){
 
   for (int i = 0; i < 1000; i++) {
     pthread_mutex_lock(&(fromAcct->lock));
-    pthread_mutex_lock(&(toAcct->lock));
-
+    while(fromAcct->balance < amt) {
+      pthread_cond_wait(&fromAcct->loBalance, &fromAcct->lock);
+    }
     fromAcct->balance -= amt;
     assert(fromAcct->balance >= 0);
-
-    toAcct->balance += amt;
-
     pthread_mutex_unlock(&(fromAcct->lock));
+
+    pthread_mutex_lock(&(toAcct->lock));
+    toAcct->balance += amt;
+    pthread_cond_signal(&toAcct->loBalance);
     pthread_mutex_unlock(&(toAcct->lock));
   }
 
@@ -43,6 +47,9 @@ int main() {
   B.balance = 5000;
   pthread_mutex_init(&(A.lock), NULL);
   pthread_mutex_init(&(B.lock), NULL);
+
+  pthread_cond_init(&(A.loBalance), NULL);
+  pthread_cond_init(&(B.loBalance), NULL);
 
   printf("Starting balance A: %.2f\n", A.balance);
   printf("Starting balance B: %.2f\n", B.balance);
