@@ -17,7 +17,18 @@ struct thread_data {
 
 void *start(void* userdata) {
   struct thread_data* data = (struct thread_data*) userdata;
-  // todo: your code here
+  printf("Thread is coloring rows %d to %d with color %d %d %d\n", data->starti,
+      data->endi, data->color.blue, data->color.green, data->color.red);
+  int startidx = data->starti * 1024;
+  int endidx = data->endi * 1024;
+  
+      for (int i = startidx; i < endidx; i ++) {
+    data->image[i].red = data->color.red;
+    data->image[i].green = data->color.green;
+    data->image[i].blue = data->color.blue;
+  }
+  
+
   return 0;
 }
 
@@ -35,8 +46,17 @@ int main(int argc, char** argv) {
   struct ppm_pixel* colors = malloc(sizeof(struct ppm_pixel) * N);
   pthread_t* threads = malloc(sizeof(pthread_t) * N);
   struct thread_data* data = malloc(sizeof(struct thread_data) * N);
+  int row = 1024/N;
 
   for (int i = 0; i < N; i++) {
+    data[i].starti = i * row;
+    data[i].endi = (i + 1) * row;
+    data[i].width = 1024;
+    data[i].height = 1024;
+    data[i].color.red = rand() % 256;
+    data[i].color.blue = rand() % 256;
+    data[i].color.green = rand() % 256;
+    data[i].image = image;
     pthread_create(&threads[i], NULL, start, &data[i]);
   }
 
@@ -45,4 +65,8 @@ int main(int argc, char** argv) {
   }
 
   write_ppm("stripes.ppm", image, size, size);
+  free(image);
+  free(colors);
+  free(threads);
+  free(data);
 }
