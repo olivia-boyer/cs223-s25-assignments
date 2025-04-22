@@ -11,15 +11,16 @@ int main(int argc, char** argv)
     scanf("%d", &bool);
     printf("Number: ");
     scanf("%d", &num);
-    char** adjs = (char**) malloc(sizeof(char) * num * 32);
+    char** adjs = (char**) malloc(sizeof(char*) * num);
 
     
     for (int i = 0; i < num; i++) { //not reading into array
         
+        char* temp = malloc(sizeof(char) * 32);
         printf("Adjective: ");
-        scanf("%s\n", adjs[i]);
+        scanf("%s", temp);
+        adjs[i] = temp;
       
-    
     }
 
     printf("You are the most ");
@@ -35,6 +36,9 @@ int main(int argc, char** argv)
         printf("false!\n");
     }
 
+    for (int i = 0; i  < num; i++) {
+        free(adjs[i]);
+    }
     free(adjs);
 
     return 0;
